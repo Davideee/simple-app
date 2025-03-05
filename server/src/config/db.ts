@@ -7,3 +7,15 @@ export const pool = new Pool({
     password: process.env.DB_PASSWORD,
     port: Number(process.env.DB_PORT),
 });
+
+async function testConnection() {
+    try {
+        const client = await pool.connect();
+        console.log('Database connection successful');
+        client.release(); // Wichtig: Client nach der Nutzung freigeben
+    } catch (err) {
+        console.error('Error connecting to the database:', err);
+    }
+}
+
+testConnection(); 
