@@ -6,6 +6,7 @@
     "build:ui": "cd simple-ui && npm run build",
     "build:server": "cd server && npm run build",
     "copy-ui": "npx mkdirp server/dist/public && npx cpy \"simple-ui/dist/**/*\" server/dist/public",
+    "quick:start": "npm run build:server && npm start",
     "start": "cd server && node dist/server.js"
   },
   "devDependencies": {

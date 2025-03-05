@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API-Routen
-app.use('/api/users', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/counter', counterRoutes);
 
 // Geschützte Route
@@ -30,10 +30,10 @@ app.get('/api', (_req, res) => {
     res.status(200).json({ message: 'Hello from the server!' });
 });
 
-// Statische Dateien
+// **Wichtige Änderung hier:** Zuerst die API-Routen und dann statische Dateien
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Catch-All für Frontend (SPA)
+// Catch-All für Frontend (SPA) nach den API-Routen
 app.get('*', (_req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

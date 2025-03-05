@@ -14,7 +14,7 @@ export const registerUser = async (userData: { email: string; password: string }
         'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email',
         [email, hashedPassword]
     );
-
+    console.log(result.rows[0]);
     return result.rows[0];
 };
 
@@ -35,4 +35,15 @@ export const loginUser = async (userData: { email: string; password: string }) =
     const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
     return token;
+};
+
+export const getFirstUser = async (): Promise<User | null> => {
+    const result = await pool.query('SELECT * FROM users LIMIT 1');
+
+    if (result.rows.length === 0) {
+        return null; // Kein Benutzer gefunden
+    }
+
+    const user: User = result.rows[0];
+    return user;
 };
