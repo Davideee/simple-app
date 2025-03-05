@@ -41,9 +41,10 @@ export const getFirstUser = async (): Promise<User | null> => {
     const result = await pool.query('SELECT * FROM user LIMIT 1');
     console.log("result: ", result);
     if (result.rows.length === 0) {
-        return null; // Kein Benutzer gefunden
+        console.log("No users found");
     }
 
     const user: User = result.rows[0];
+    console.log("User found: ", user); 
     return user;
 };
