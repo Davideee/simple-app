@@ -11,7 +11,7 @@ export const registerUser = async (userData: { email: string; password: string }
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const result = await pool.query(
-        'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email',
+        'INSERT INTO user (email, password_hash) VALUES ($1, $2) RETURNING id, email',
         [email, hashedPassword]
     );
     console.log(result.rows[0]);
@@ -21,7 +21,7 @@ export const registerUser = async (userData: { email: string; password: string }
 export const loginUser = async (userData: { email: string; password: string }) => {
     const { email, password } = userData;
 
-    const result = await pool.query('SELECT password_hash FROM users WHERE email = $1', [email]);
+    const result = await pool.query('SELECT password_hash FROM user WHERE email = $1', [email]);
 
     if (result.rows.length === 0) throw new Error('User not found');
 
@@ -38,13 +38,7 @@ export const loginUser = async (userData: { email: string; password: string }) =
 };
 
 export const getFirstUser = async (): Promise<User | null> => {
-    // Logge die Umgebungsvariablen
-    console.log('DB_USER:', process.env.DB_USER);
-    console.log('DB_HOST:', process.env.DB_HOST);
-    console.log('DB_NAME:', process.env.DB_NAME);
-    console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-    console.log('DB_PORT:', process.env.DB_PORT);
-    const result = await pool.query('SELECT * FROM users LIMIT 1');
+    const result = await pool.query('SELECT * FROM user LIMIT 1');
 
     if (result.rows.length === 0) {
         return null; // Kein Benutzer gefunden

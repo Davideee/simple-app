@@ -19,11 +19,18 @@ export const loginUserController = async (req: Request, res: Response): Promise<
     }
 };
 
-export const findUserController = async (_: Request, res: Response): Promise<void> => {
+export const findUserController = async (_: Request, res: Response): Promise<void | Response> => {
     try {
+        console.log('Fetching user from database...');
         const user = await getFirstUser();
-        res.status(200).json({message: 'found user', user});
+        if (!user) {
+            console.log('No user found');
+            return res.status(404).json({ message: 'User not found' });
+        }
+        console.log('User found:', user);
+        return res.status(200).json({ message: 'found user', user });  
     } catch (err) {
-        res.status(400).json({message: 'Invalid search user'});
+        console.error('Error in findUserController:', err);
+        return res.status(400).json({ message: 'Invalid search user' });  
     }
-}
+};
