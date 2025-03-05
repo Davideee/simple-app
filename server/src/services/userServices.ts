@@ -38,6 +38,12 @@ export const loginUser = async (userData: { email: string; password: string }) =
 };
 
 export const getFirstUser = async (): Promise<User | null> => {
+    // Logge die Umgebungsvariablen
+    console.log('PGUSER:', process.env.PGUSER);
+    console.log('DATABASE_URL:', process.env.DATABASE_URL);
+    console.log('POSTGRES_DB:', process.env.POSTGRES_DB);
+    console.log('PGPASSWORD:', process.env.PGPASSWORD);
+    console.log('PGPORT:', process.env.PGPORT);
     const result = await pool.query('SELECT * FROM users LIMIT 1');
 
     if (result.rows.length === 0) {
