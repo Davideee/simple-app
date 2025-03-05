@@ -6,10 +6,19 @@
     "build:ui": "cd simple-ui && npm run build",
     "build:server": "cd server && npm run build",
     "copy-ui": "npx mkdirp server/dist/public && npx cpy \"simple-ui/dist/**/*\" server/dist/public",
-    "start": "cd server && node dist/main.js"
+    "start": "cd server && node dist/server.js"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/pg": "^8.11.11",
     "cpy-cli": "^5.0.0",
     "mkdirp": "^3.0.1"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.3"
   }
 }
