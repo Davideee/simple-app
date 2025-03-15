@@ -38,7 +38,7 @@ export const loginUser = async (userData: { email: string; password: string }) =
 };
 
 export const getFirstUser = async (): Promise<User | null> => {
-    const result = await pool.query('SELECT * FROM user LIMIT 1');
+    const result = await pool.query('SELECT * FROM "user" LIMIT 1');
     console.log("result: ", result);
     if (result.rows.length === 0) {
         console.log("No users found");
